@@ -1,0 +1,10 @@
+#requirements for running read.py file
+pandas
+streamlit
+Flask
+plotly
+openpylx
+altair==4.0
+
+#for running the file use the command 
+#streamlit run <filename.py>
