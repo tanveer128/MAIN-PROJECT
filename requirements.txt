@@ -1,9 +1,9 @@
 #requirements for running read.py file
 pandas
 streamlit
-Flask
+requests
 plotly
-openpylx
+openpyxl
 altair==4.0
 
 #for running the file use the command 
