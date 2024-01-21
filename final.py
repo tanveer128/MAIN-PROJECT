@@ -4,8 +4,9 @@ import time
 import streamlit as st
 import plotly.express as px
 from PIL import Image
+
 def get_all_posts():
-    url = "https://jsonplaceholder.typicode.com/posts"
+    url = "http://localhost:3001/data"
     
     # Send a GET request to the URL
     response = requests.get(url)
@@ -29,8 +30,7 @@ def update_excel_file(posts_data, excel_file_path):
             df.to_excel(writer, index=False, sheet_name='ex1')
         
         print(f"Data updated in Excel file: {excel_file_path}")
-        st.set_page_config(page_title='execetuion data')
-        st.header('execetion data analaysis')
+        
         #excel file name 
         execl_file='test.xlsx'
         #excel sheet name
@@ -38,20 +38,23 @@ def update_excel_file(posts_data, excel_file_path):
         #coloumn to be used make sure you have the name col name as in the exccel file
         df=pd.read_excel(execl_file,sheet_name=sheet_name,usecols='B:C',header=0)
         df_participants=pd.read_excel(execl_file,sheet_name=sheet_name,usecols='B:C',header=0)
-        st.dataframe(df)
-        #id and title is the col name in the execl file name
-        pie_chart=px.pie(df_participants,title='PIE CHART',values='id',names='title')
-        st.plotly_chart(pie_chart)
+        with placeholder.container():
+            st.dataframe(df)
+            #id and title is the col name in the execl file name
+            pie_chart=px.pie(df_participants,title='PIE CHART',values='id',names='command')
+            st.plotly_chart(pie_chart)
+            # Wait for 10 seconds 
+            time.sleep(10)
 
 # path of excel or excel file name
 excel_file_path = "test.xlsx"
-
+st.set_page_config(page_title='execution data')
+st.header('execution data analysis')
+placeholder = st.empty()
 while True:
     # Retrieve all  data
     all_posts_data = get_all_posts()
-    
+
     # calling the update function for updating excel data
     update_excel_file(all_posts_data, excel_file_path)
-
-    # Wait for 10 seconds 
-    time.sleep(10)
+    placeholder.empty()
